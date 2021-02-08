@@ -30,12 +30,13 @@ class TeasListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.recyclerView.adapter= TeasListAdapter()
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-        binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
+        // binding.buttonFirst.setOnClickListener {
+        //     findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        // }
     }
 }
