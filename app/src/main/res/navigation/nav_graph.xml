@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.canonicalexamples.tearank.FirstFragment"
+        android:name="com.canonicalexamples.tearank.TeasListFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_teas_list">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"

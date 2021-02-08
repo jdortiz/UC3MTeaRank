@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TeaRank">
         <activity
-            android:name=".MainActivity"
+            android:name=".TeaRankActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.TeaRank.NoActionBar">
             <intent-filter>
