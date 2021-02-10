@@ -1,4 +1,4 @@
-package com.canonicalexamples.tearank
+package com.canonicalexamples.tearank.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
