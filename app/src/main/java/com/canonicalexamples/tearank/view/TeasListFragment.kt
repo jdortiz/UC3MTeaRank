@@ -1,15 +1,16 @@
-package com.canonicalexamples.tearank
+package com.canonicalexamples.tearank.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.canonicalexamples.tearank.R
 import com.canonicalexamples.tearank.databinding.FragmentTeasListBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+import com.canonicalexamples.tearank.util.observeEvent
+import com.canonicalexamples.tearank.viewmodels.TeasListViewModel
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -17,6 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 class TeasListFragment : Fragment() {
 
     private lateinit var binding: FragmentTeasListBinding
+    private val viewModel: TeasListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,13 +32,15 @@ class TeasListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerView.adapter= TeasListAdapter()
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        binding.recyclerView.adapter = TeasListAdapter(viewModel = viewModel)
+        binding.fab.setOnClickListener {
+            viewModel.addButtonClicked()
         }
-        // binding.buttonFirst.setOnClickListener {
-        //     findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        // }
+
+        viewModel.navigate.observeEvent(viewLifecycleOwner) { navigate ->
+            if (navigate) {
+                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            }
+        }
     }
 }
