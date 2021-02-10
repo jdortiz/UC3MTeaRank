@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.canonicalexamples.tearank.R
 import com.canonicalexamples.tearank.databinding.FragmentTeasListBinding
+import com.canonicalexamples.tearank.util.observeEvent
 import com.canonicalexamples.tearank.viewmodels.TeasListViewModel
 
 /**
@@ -17,7 +18,7 @@ import com.canonicalexamples.tearank.viewmodels.TeasListViewModel
 class TeasListFragment : Fragment() {
 
     private lateinit var binding: FragmentTeasListBinding
-    private lateinit var viewModel: TeasListViewModel
+    private val viewModel: TeasListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,14 +31,13 @@ class TeasListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(TeasListViewModel::class.java)
 
         binding.recyclerView.adapter = TeasListAdapter()
         binding.fab.setOnClickListener {
             viewModel.addButtonClicked()
         }
 
-        viewModel.navigate.observe(viewLifecycleOwner) { navigate ->
+        viewModel.navigate.observeEvent(viewLifecycleOwner) { navigate ->
             if (navigate) {
                 findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
             }

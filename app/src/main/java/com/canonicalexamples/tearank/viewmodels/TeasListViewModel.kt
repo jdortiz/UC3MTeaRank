@@ -3,6 +3,7 @@ package com.canonicalexamples.tearank.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.canonicalexamples.tearank.util.Event
 
 /**
  * 20210210. Initial version created by jorge
@@ -23,9 +24,10 @@ import androidx.lifecycle.ViewModel
  * limitations under the License.
  */
 class TeasListViewModel: ViewModel() {
-    var navigate: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val _navigate: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val navigate: LiveData<Event<Boolean>> = _navigate
 
     fun addButtonClicked() {
-        navigate.value = true
+        _navigate.value = Event(true)
     }
 }
