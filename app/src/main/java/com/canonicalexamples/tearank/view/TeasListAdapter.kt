@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.canonicalexamples.tearank.databinding.ItemTeaBinding
+import com.canonicalexamples.tearank.viewmodels.TeasListViewModel
 
 /**
  * 20210208. Initial version created by jorge
@@ -23,9 +24,7 @@ import com.canonicalexamples.tearank.databinding.ItemTeaBinding
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class TeasListAdapter: RecyclerView.Adapter<TeasListAdapter.TeaItemViewHolder>() {
-
-    private val teaList = listOf("Earl Gray", "Oolong", "Black Tea")
+class TeasListAdapter(private val viewModel: TeasListViewModel): RecyclerView.Adapter<TeasListAdapter.TeaItemViewHolder>() {
 
     class TeaItemViewHolder(binding: ItemTeaBinding): RecyclerView.ViewHolder(binding.root) {
         val teaName = binding.teaName
@@ -35,9 +34,9 @@ class TeasListAdapter: RecyclerView.Adapter<TeasListAdapter.TeaItemViewHolder>()
         TeaItemViewHolder(ItemTeaBinding.inflate(LayoutInflater.from(parent.context)))
 
     override fun onBindViewHolder(holder: TeaItemViewHolder, position: Int) {
-
-        holder.teaName.text = "Wonderful ${teaList[position]}"
+        val tea = viewModel.getItem(position)
+        holder.teaName.text = "Wonderful ${tea.name}"
     }
 
-    override fun getItemCount(): Int = teaList.count()
+    override fun getItemCount(): Int = viewModel.numberOfItems
 }

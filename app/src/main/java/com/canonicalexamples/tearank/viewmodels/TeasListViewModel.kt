@@ -26,8 +26,15 @@ import com.canonicalexamples.tearank.util.Event
 class TeasListViewModel: ViewModel() {
     private val _navigate: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val navigate: LiveData<Event<Boolean>> = _navigate
+    private val teaList = listOf("Earl Gray", "Oolong", "Black Tea")
+    data class Item(val name: String)
+    val numberOfItems: Int
+        get() = teaList.count()
 
     fun addButtonClicked() {
         _navigate.value = Event(true)
     }
+
+    fun getItem(n: Int) = Item(name = teaList[n])
+
 }

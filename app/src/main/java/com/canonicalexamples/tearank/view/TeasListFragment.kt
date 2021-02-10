@@ -32,7 +32,7 @@ class TeasListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerView.adapter = TeasListAdapter()
+        binding.recyclerView.adapter = TeasListAdapter(viewModel = viewModel)
         binding.fab.setOnClickListener {
             viewModel.addButtonClicked()
         }
