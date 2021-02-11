@@ -3,6 +3,8 @@ package com.canonicalexamples.tearank.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.canonicalexamples.tearank.model.TeaDatabase
 import com.canonicalexamples.tearank.util.Event
 
 /**
@@ -23,7 +25,7 @@ import com.canonicalexamples.tearank.util.Event
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class TeasListViewModel: ViewModel() {
+class TeasListViewModel(private val database: TeaDatabase): ViewModel() {
     private val _navigate: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val navigate: LiveData<Event<Boolean>> = _navigate
     private val teaList = listOf("Earl Gray", "Oolong", "Black Tea")
@@ -36,5 +38,14 @@ class TeasListViewModel: ViewModel() {
     }
 
     fun getItem(n: Int) = Item(name = teaList[n])
+}
 
+class TeasListViewModelFactory(private val database: TeaDatabase): ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(TeasListViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return TeasListViewModel(database) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
 }

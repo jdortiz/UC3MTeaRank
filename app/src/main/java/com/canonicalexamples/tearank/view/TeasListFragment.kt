@@ -8,17 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.canonicalexamples.tearank.R
+import com.canonicalexamples.tearank.app.TeaRankApp
 import com.canonicalexamples.tearank.databinding.FragmentTeasListBinding
 import com.canonicalexamples.tearank.util.observeEvent
 import com.canonicalexamples.tearank.viewmodels.TeasListViewModel
+import com.canonicalexamples.tearank.viewmodels.TeasListViewModelFactory
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class TeasListFragment : Fragment() {
 
     private lateinit var binding: FragmentTeasListBinding
-    private val viewModel: TeasListViewModel by viewModels()
+    private val viewModel: TeasListViewModel by viewModels {
+        TeasListViewModelFactory((activity?.application as TeaRankApp).database)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
