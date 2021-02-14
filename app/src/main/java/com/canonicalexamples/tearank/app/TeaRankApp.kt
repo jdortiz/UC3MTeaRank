@@ -1,7 +1,12 @@
 package com.canonicalexamples.tearank.app
 
 import android.app.Application
+import com.canonicalexamples.tearank.model.Tea
 import com.canonicalexamples.tearank.model.TeaDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 /**
  * 20210211. Initial version created by jorge
@@ -23,4 +28,17 @@ import com.canonicalexamples.tearank.model.TeaDatabase
  */
 class TeaRankApp: Application() {
     val database by lazy { TeaDatabase.getInstance(this) }
+
+    override fun onCreate() {
+        super.onCreate()
+
+        CoroutineScope(Dispatchers.IO + SupervisorJob()).launch {
+            database.clearAllTables()
+            database.teaDao.apply {
+                this.create(tea = Tea(id = 0, name = "Oolong", rating = 1))
+                this.create(tea = Tea(id = 1, name = "Pu erh", rating = 1))
+                this.create(tea = Tea(id = 2, name = "Green tea", rating = 1))
+            }
+        }
+    }
 }

@@ -26,13 +26,13 @@ import androidx.room.Update
 @Dao
 interface TeaDao {
     @Insert
-    fun create(tea: Tea)
+    suspend fun create(tea: Tea)
     @Query("SELECT * FROM tea_table WHERE id = :id")
-    fun get(id: Int): Tea?
+    suspend fun get(id: Int): Tea?
     @Query("SELECT * FROM tea_table")
-    fun fetchTeas(): List<Tea>
+    suspend fun fetchTeas(): List<Tea>
     @Update
-    fun update(tea: Tea)
+    suspend fun update(tea: Tea)
     @Query("DELETE FROM tea_table WHERE id = :id")
-    fun delete(id: Int)
+    suspend fun delete(id: Int)
 }

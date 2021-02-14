@@ -4,8 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.canonicalexamples.tearank.model.Tea
 import com.canonicalexamples.tearank.model.TeaDatabase
 import com.canonicalexamples.tearank.util.Event
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * 20210210. Initial version created by jorge
@@ -28,16 +32,23 @@ import com.canonicalexamples.tearank.util.Event
 class TeasListViewModel(private val database: TeaDatabase): ViewModel() {
     private val _navigate: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val navigate: LiveData<Event<Boolean>> = _navigate
-    private val teaList = listOf("Earl Gray", "Oolong", "Black Tea")
+    private var teasList = listOf<Tea>()
     data class Item(val name: String)
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            teasList = database.teaDao.fetchTeas()
+        }
+    }
+
     val numberOfItems: Int
-        get() = teaList.count()
+        get() = teasList.count()
 
     fun addButtonClicked() {
         _navigate.value = Event(true)
     }
 
-    fun getItem(n: Int) = Item(name = teaList[n])
+    fun getItem(n: Int) = Item(name = teasList[n].name)
 }
 
 class TeasListViewModelFactory(private val database: TeaDatabase): ViewModelProvider.Factory {
