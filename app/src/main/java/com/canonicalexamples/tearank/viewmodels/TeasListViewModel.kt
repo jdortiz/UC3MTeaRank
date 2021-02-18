@@ -49,6 +49,10 @@ class TeasListViewModel(private val database: TeaDatabase): ViewModel() {
     }
 
     fun getItem(n: Int) = Item(name = teasList[n].name)
+
+    fun onClickItem(n: Int) {
+        println("Item $n clicked")
+    }
 }
 
 class TeasListViewModelFactory(private val database: TeaDatabase): ViewModelProvider.Factory {
