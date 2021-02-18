@@ -18,7 +18,8 @@ class TeasListFragment : Fragment() {
 
     private lateinit var binding: FragmentTeasListBinding
     private val viewModel: TeasListViewModel by viewModels {
-        TeasListViewModelFactory((activity?.application as TeaRankApp).database)
+        val app = activity?.application as TeaRankApp
+        TeasListViewModelFactory(app.database, app.webservice)
     }
 
     override fun onCreateView(

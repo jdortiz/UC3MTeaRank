@@ -3,10 +3,14 @@ package com.canonicalexamples.tearank.app
 import android.app.Application
 import com.canonicalexamples.tearank.model.Tea
 import com.canonicalexamples.tearank.model.TeaDatabase
+import com.canonicalexamples.tearank.model.TodoService
+import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * 20210211. Initial version created by jorge
@@ -28,7 +32,12 @@ import kotlinx.coroutines.launch
  */
 class TeaRankApp: Application() {
     val database by lazy { TeaDatabase.getInstance(this) }
-
+    val webservice by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://jsonplaceholder.typicode.com/")
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+            .build().create(TodoService::class.java)
+    }
     override fun onCreate() {
         super.onCreate()
 

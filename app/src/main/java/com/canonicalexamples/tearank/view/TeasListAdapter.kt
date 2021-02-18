@@ -1,6 +1,7 @@
 package com.canonicalexamples.tearank.view
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.canonicalexamples.tearank.databinding.ItemTeaBinding
@@ -26,12 +27,18 @@ import com.canonicalexamples.tearank.viewmodels.TeasListViewModel
  */
 class TeasListAdapter(private val viewModel: TeasListViewModel): RecyclerView.Adapter<TeasListAdapter.TeaItemViewHolder>() {
 
-    class TeaItemViewHolder(binding: ItemTeaBinding): RecyclerView.ViewHolder(binding.root) {
+    class TeaItemViewHolder(private val viewModel: TeasListViewModel, binding: ItemTeaBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         val teaName = binding.teaName
+        init {
+            binding.root.setOnClickListener(this)
+        }
+        override fun onClick(v: View?) {
+            viewModel.onClickItem(layoutPosition)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeaItemViewHolder =
-        TeaItemViewHolder(ItemTeaBinding.inflate(LayoutInflater.from(parent.context)))
+        TeaItemViewHolder(viewModel, ItemTeaBinding.inflate(LayoutInflater.from(parent.context)))
 
     override fun onBindViewHolder(holder: TeaItemViewHolder, position: Int) {
         val tea = viewModel.getItem(position)
